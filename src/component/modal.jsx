@@ -1,10 +1,10 @@
-import React from 'react';
-import {buildUrlImage} from "../utilitary/buildUrlImage.js";
+import React from "react";
+import { buildUrlImage } from "../utilitary/buildUrlImage.js";
 import QRCode from "react-qr-code";
 
 export default function Modal({ isOpen, onClose, data }) {
     if (!isOpen || !data) return null;
-    console.log(data)
+
     const qrdata = JSON.stringify({
         type: data.title ? "movie" : "tv",
         id: data.id,
@@ -12,25 +12,44 @@ export default function Modal({ isOpen, onClose, data }) {
         overview: data.overview,
         rating: data.vote_average.toFixed(2),
         date: data.release_date || data.first_air_date,
-        poster: `https://image.tmdb.org/t/p/w300${data.poster_path}`
+        poster: `https://image.tmdb.org/t/p/w300${data.poster_path}`,
     });
 
     return (
-        <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="bg-amber-50 rounded-2xl p-6 min-w-[500px]">
-                <div className="flex flex-col justify-between items-center m-4">
-                    <h1 className="text-3xl font-bold text-black m-2">{data.title || data.name}</h1>
+        <div
+            onClick={onClose}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        >
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-md sm:max-w-lg bg-amber-50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in"
+            >
+                <div className="flex justify-between items-start p-4 border-b border-black/10">
+                    <h1 className="text-lg sm:text-2xl font-bold text-black pr-4">
+                        {data.title || data.name}
+                    </h1>
+                    <button
+                        onClick={onClose}
+                        className="text-red-500 text-xl font-bold hover:scale-110 transition"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <div className="p-4 sm:p-6 flex flex-col items-center gap-4 max-h-[75vh] overflow-y-auto">
                     <img
                         src={buildUrlImage(data.poster_path)}
                         alt={data.title || data.name}
-                        className="mx-auto"
-                        width="200"
+                        className="w-40 sm:w-52 rounded-xl shadow-md"
                     />
-                    <h2 className="text-xl font-bold text-black m-2">Escanea el QR para obtener mas informacion</h2>
-                    <div className="flex justify-center bg-white p-3 rounded m-2">
-                        <QRCode value={qrdata} size={160} />
+
+                    <p className="text-sm sm:text-base text-gray-700 text-center">
+                        Escanea el QR para obtener más información
+                    </p>
+
+                    <div className="bg-white p-3 rounded-xl shadow">
+                        <QRCode value={qrdata} size={150} />
                     </div>
-                    <button onClick={onClose} className="text-red-500 font-bold text-lg m-2">✕</button>
                 </div>
             </div>
         </div>
