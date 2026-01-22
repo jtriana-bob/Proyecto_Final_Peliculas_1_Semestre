@@ -37,4 +37,12 @@ export class ApiMovie {
         });
         return response.data;
     }
+    static async getVideo(id, type) {
+        const response = await movieInstance.get(`/${type}/${id}/videos`, {
+            params: {
+                language: 'es-ES'
+            }
+        });
+        return response.data;
+    }
 }
