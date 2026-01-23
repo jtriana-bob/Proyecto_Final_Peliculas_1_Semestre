@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ApiMovie } from "../services/api-movie.js";
 import { buildUrlImage } from "../utilitary/buildUrlImage.js";
 
-export default function Detalles() {
+export default function Details() {
     const { type, id } = useParams();
     const [detalles, setDetalles] = useState(null);
     const [video, setVideo] = useState(null);

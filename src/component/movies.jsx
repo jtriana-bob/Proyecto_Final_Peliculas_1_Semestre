@@ -111,9 +111,8 @@ export default function Movies() {
                 </Button>
 
                 <span className="px-4 py-2 rounded-full bg-slate-800/60 border border-white/10">
-          Página {pagination.page} de {pagination.total_pages}
-        </span>
-
+                    Página {pagination.page} de {pagination.total_pages}
+                </span>
                 <Button
                     size="lg"
                     className="text-gray-300"

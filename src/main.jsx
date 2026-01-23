@@ -7,7 +7,7 @@ import Movies from "./component/movies.jsx";
 import Series from "./component/series.jsx";
 import History from "./component/history.jsx";
 import Search from "./component/search.jsx";
-import Detalles from "./component/detalles.jsx";
+import Details from "./component/details.jsx";
 
 const router = createBrowserRouter([
     {
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/details/:type/:id",
-                Component: Detalles,
+                Component: Details,
             }
         ]
     },

@@ -1,12 +1,15 @@
 import React from "react";
 import { buildUrlImage } from "../utilitary/buildUrlImage.js";
 import QRCode from "react-qr-code";
+import { Link } from "react-router-dom";
 
 export default function Modal({ isOpen, onClose, data }) {
     if (!isOpen || !data) return null;
 
+    const mediaType = data.title ? "movie" : "tv";
+
     const qrdata = JSON.stringify({
-        type: data.title ? "movie" : "tv",
+        type: mediaType,
         id: data.id,
         title: data.title || data.name,
         overview: data.overview,
@@ -40,7 +43,7 @@ export default function Modal({ isOpen, onClose, data }) {
                     <img
                         src={buildUrlImage(data.poster_path)}
                         alt={data.title || data.name}
-                        className="w-40 sm:w-52 rounded-xl shadow-md"
+                        className="w-35 sm:w-45 rounded-xl shadow-md"
                     />
 
                     <p className="text-sm sm:text-base text-gray-700 text-center">
@@ -48,8 +51,15 @@ export default function Modal({ isOpen, onClose, data }) {
                     </p>
 
                     <div className="bg-white p-3 rounded-xl shadow">
-                        <QRCode value={qrdata} size={150} />
+                        <QRCode value={qrdata} size={200} />
                     </div>
+
+                    <Link className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
+                        to={`/details/${mediaType}/${data.id}`}
+                        onClick={onClose}
+                    >
+                        Ver detalles
+                    </Link>
                 </div>
             </div>
         </div>
