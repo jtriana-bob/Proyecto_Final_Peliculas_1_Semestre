@@ -1,27 +1,49 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../utilitary/supabase.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoaderIcon, Film, Tv } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+
 
 export default function History() {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const { user, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!authLoading && !user) {
+            navigate("/login", {
+                state: { message: "Debes iniciar sesión para ver tu historial." }
+            });
+        }
+    }, [user, authLoading, navigate]);
+
     const fetchDataSupabase = async () => {
+        if (!user) return;
+
         const { data, error } = await supabase
             .from("peliculas")
             .select("*")
             .order("escaneos", { ascending: false });
+
         if (error) console.error(error);
         else setList(data);
+
         setLoading(false);
     };
 
     useEffect(() => {
-        fetchDataSupabase();
-    }, []);
+        const fetchData = async() => {
+            if (user) await fetchDataSupabase();
+        }
 
-    if (loading) {
+        fetchData();
+
+    }, [user]);
+
+    if (authLoading || loading) {
         return (
             <div className="flex justify-center items-center min-h-[60vh]">
                 <LoaderIcon className="size-14 animate-spin text-slate-400" />

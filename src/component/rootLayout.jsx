@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Film, Tv, History, Search, Menu, X } from "lucide-react";
+import { signOut } from "firebase/auth";
+import { auth } from "../services/firebase.js";
+import { useAuth } from "../context/AuthContext";
+
 
 export default function RootLayout() {
     const [open, setOpen] = useState(false);
+    const { user } = useAuth();
 
     const linkClass = ({ isActive }) =>
-        `flex items-center gap-2 px-4 py-2 rounded-lg transition text-base
-     ${
-            isActive
-                ? "bg-indigo-600 text-white"
+        `flex items-center gap-2 px-4 py-2 rounded-lg transition text-base${
+            isActive ? "bg-indigo-600 text-white"
                 : "text-slate-300 hover:bg-slate-700 hover:text-white"
         }`;
 
@@ -34,6 +37,18 @@ export default function RootLayout() {
                         <NavLink to="/search" className={linkClass}>
                             <Search size={16} /> Buscar
                         </NavLink>
+                        {!user ? (
+                            <NavLink to="/login" className={linkClass}>
+                                Iniciar sesión
+                            </NavLink>
+                        ) : (
+                            <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-slate-300 hover:bg-red-600 hover:text-white transition"
+                                onClick={() => signOut(auth)}
+                            >
+                                Cerrar sesión
+                            </button>
+                        )}
+
                     </div>
 
                     <button
@@ -58,6 +73,20 @@ export default function RootLayout() {
                         <NavLink to="/search" onClick={() => setOpen(false)} className={linkClass}>
                             <Search size={18} /> Buscar
                         </NavLink>
+                        {!user ? (
+                            <NavLink to="/login" onClick={() => setOpen(false)} className={linkClass}>
+                                Iniciar sesión
+                            </NavLink>
+                        ) : (
+                            <button className="w-full text-left px-4 py-2 rounded-lg text-slate-300 hover:bg-red-600 hover:text-white transition"
+                                onClick={() => {
+                                    signOut(auth);
+                                    setOpen(false);
+                                }}
+                            >
+                                Cerrar sesión
+                            </button>
+                        )}
                     </div>
                 )}
             </header>

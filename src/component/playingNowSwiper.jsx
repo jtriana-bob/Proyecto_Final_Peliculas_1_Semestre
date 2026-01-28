@@ -36,19 +36,13 @@ export default function PlayingNowSwiper() {
             <h1 className="text-xl sm:text-3xl font-bold text-center text-white mb-6 sm:mb-8">
                 🎬 Películas en cartelera
             </h1>
-
-            {/* Flechas */}
             <button
-                className="swiper-prev absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20
-                   bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition"
-            >
+                className="swiper-prev absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition">
                 <ChevronLeft size={26} />
             </button>
 
             <button
-                className="swiper-next absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20
-                   bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition"
-            >
+                className="swiper-next absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition">
                 <ChevronRight size={26} />
             </button>
 
@@ -57,7 +51,6 @@ export default function PlayingNowSwiper() {
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 onMouseEnter={() => swiperRef.current?.autoplay?.stop()}
                 onMouseLeave={() => swiperRef.current?.autoplay?.start()}
-                className="!overflow-visible"
             >
 
             {nowPlaying.map((movie) => (
@@ -67,11 +60,7 @@ export default function PlayingNowSwiper() {
                                 setSelected(movie);
                                 setIsModalOpen(true);
                             }}
-                            className="group w-[200px] sm:w-[230px] h-[340px] sm:h-[400px]
-                         flex flex-col cursor-pointer rounded-xl overflow-hidden
-                         bg-slate-800/60 border border-white/10
-                         transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-indigo-400/40"
-                        >
+                            className="group w-[200px] sm:w-[230px] h-[340px] sm:h-[400px] flex flex-col cursor-pointer rounded-xl overflow-hidden bg-slate-800/60 border border-white/10 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-indigo-400/40">
                             <div className="aspect-[2/3] w-full overflow-hidden">
                                 <img
                                     src={buildUrlImage(movie.poster_path)}

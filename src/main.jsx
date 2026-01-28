@@ -8,6 +8,8 @@ import Series from "./component/series.jsx";
 import History from "./component/history.jsx";
 import Search from "./component/search.jsx";
 import Details from "./component/details.jsx";
+import Login from "@/component/login.jsx";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter([
     {
@@ -33,11 +35,17 @@ const router = createBrowserRouter([
             {
                 path: "/details/:type/:id",
                 Component: Details,
+            },
+            {
+                path: "/login",
+                Component: Login,
             }
         ]
     },
 ]);
 
 createRoot(document.getElementById('root')).render(
-    <RouterProvider router={router}/>
+    <AuthProvider>
+        <RouterProvider router={router}/>
+    </AuthProvider>
 )
